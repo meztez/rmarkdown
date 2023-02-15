@@ -129,9 +129,11 @@ params_value_from_ui <- function(inputControlFn, value, uivalue) {
 # Uploaded files will be deleted when the shiny UI is closed, so we need to back
 # them up to new temp files: https://github.com/rstudio/rmarkdown/issues/919
 backup_file_input <- function(files) {
-  files_content <- character(length(files))
+  files2 <- files
   for (i in seq_along(files)) {
-    files2[i] <- paste0(readLines(files[i]), collapse = "\n")
+    if (file.exists(files[i])) {
+      files2[i] <- paste0(readLines(files[i]), collapse = "\n")
+    }
   }
   files2
 }
